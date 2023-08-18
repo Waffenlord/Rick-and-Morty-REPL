@@ -8,7 +8,7 @@ import (
 )
 
 
-func startRepl() {
+func startRepl(c *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
