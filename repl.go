@@ -31,7 +31,7 @@ func startRepl(c *config) {
 			continue
 		}
 
-		err := command.callback()
+		err := command.callback(c)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -51,7 +51,7 @@ func cleanInput(input string) []string {
 type cliCommand struct {
 	name string
 	description string
-	callback func() error
+	callback func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -66,5 +66,36 @@ func getCommands() map[string]cliCommand {
 			description: "Exit the program.",
 			callback: commandExit,
 		},
+		"character": {
+			name: "character",
+			description: "Access all characters information.",
+			callback: commandCharRepl,
+		},
 	}
+}
+
+func getSecondaryCommands(option string) map[string]cliCommand {
+	commandsMap := make(map[string]map[string]cliCommand)
+	commandsMap["character"] = map[string]cliCommand{"help": {
+		name: "help",
+		description: "See the list of available commands for characters",
+		callback: commandCharHelp,
+	},
+	"back": {
+		name: "back",
+		description: "Go back to the main menu.",
+		callback: commandCharBack,
+	},
+	"map": {
+		name: "map",
+		description: "Get the a list with 20 characters",
+		callback: commandCharMap,
+	},}
+	
+	currentCommands, ok := commandsMap[option]
+	if !ok {
+		fmt.Println("can't retrieve the commands!")
+		return nil
+	}
+	return currentCommands
 }
