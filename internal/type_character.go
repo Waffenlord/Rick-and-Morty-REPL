@@ -6,8 +6,8 @@ type CharacterResp struct {
 	Info struct {
 		Count int    `json:"count"`
 		Pages int    `json:"pages"`
-		Next  string `json:"next"`
-		Prev  any    `json:"prev"`
+		Next  *string `json:"next"`
+		Prev  *string    `json:"prev"`
 	} `json:"info"`
 	Results []struct {
 		ID      int    `json:"id"`

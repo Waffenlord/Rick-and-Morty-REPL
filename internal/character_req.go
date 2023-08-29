@@ -7,9 +7,13 @@ import (
 	"net/http"
 )
 
-func (c *Client) ListCharacters() (CharacterResp, error) {
+func (c *Client) ListCharacters(page *string) (CharacterResp, error) {
 	endpoint := "/character"
 	fullURL := baseURL + endpoint
+
+	if page != nil {
+		fullURL = *page
+	}
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {

@@ -4,6 +4,8 @@ import rick_morty_api "github.com/Waffenlord/Rick-and-Morty-REPL/internal"
 
 type config struct {
 	rickMortyClient rick_morty_api.Client
+	nextCharacterList *string
+	previousCharacterList *string
 }
 
 func main() {

@@ -80,17 +80,28 @@ func getSecondaryCommands(option string) map[string]cliCommand {
 		name: "help",
 		description: "See the list of available commands for characters",
 		callback: commandCharHelp,
-	},
-	"back": {
-		name: "back",
-		description: "Go back to the main menu.",
-		callback: commandCharBack,
-	},
-	"map": {
-		name: "map",
-		description: "Get the a list with 20 characters",
-		callback: commandCharMap,
-	},}
+		},
+		"back": {
+			name: "back",
+			description: "Go back to the main menu.",
+			callback: commandCharBack,
+		},
+		"map": {
+			name: "map",
+			description: "Get the a list with the next 20 characters",
+			callback: commandCharMap,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Get the a list with the previous 20 characters",
+			callback: commandCharMapB,
+		},
+		"exit": {
+			name: "exit",
+			description: "Exit the program.",
+			callback: commandExit,
+		},
+	}
 	
 	currentCommands, ok := commandsMap[option]
 	if !ok {
