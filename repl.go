@@ -8,6 +8,7 @@ import (
 )
 
 
+// Main loop of the REPL
 func startRepl(c *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -17,20 +18,25 @@ func startRepl(c *config) {
 		scanner.Scan()
 		text := scanner.Text()
 
+		// Clean user input
 		cleanedInput := cleanInput(text)
 		if len(cleanedInput) == 0 {
 			continue
 		}
 
 		commandName := cleanedInput[0]
+
+		// Get the main menu commands
 		availableCommands := getCommands()
 
+		// Check if the user input is a valid command
 		command, ok := availableCommands[commandName]
 		if !ok {
 			fmt.Println("invalid command!")
 			continue
 		}
 
+		// Call the selected command
 		err := command.callback(c)
 		if err != nil {
 			fmt.Println(err)
@@ -40,7 +46,7 @@ func startRepl(c *config) {
 }
 
 
-
+// Clean user input by setting it to lower case and extracting individual words
 func cleanInput(input string) []string {
 	lowerCase := strings.ToLower(input)
 	words := strings.Fields(lowerCase)
@@ -48,12 +54,14 @@ func cleanInput(input string) []string {
 	return words
 }
 
+//Structure of every command in the REPL
 type cliCommand struct {
 	name string
 	description string
 	callback func(*config) error
 }
 
+// Return the main menu commands
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
@@ -74,12 +82,14 @@ func getCommands() map[string]cliCommand {
 	}
 }
 
+// Return the each section specific commands
 func getSecondaryCommands(option string) map[string]cliCommand {
 	commandsMap := make(map[string]map[string]cliCommand)
-	commandsMap["character"] = map[string]cliCommand{"help": {
-		name: "help",
-		description: "See the list of available commands for characters",
-		callback: commandCharHelp,
+	commandsMap["character"] = map[string]cliCommand{
+		"help": {
+			name: "help",
+			description: "See the list of available commands for characters",
+			callback: commandCharHelp,
 		},
 		"back": {
 			name: "back",

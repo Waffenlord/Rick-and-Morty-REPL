@@ -1,6 +1,10 @@
 package main
 
-import rick_morty_api "github.com/Waffenlord/Rick-and-Morty-REPL/internal"
+import (
+	"time"
+
+	rick_morty_api "github.com/Waffenlord/Rick-and-Morty-REPL/internal"
+)
 
 type config struct {
 	rickMortyClient rick_morty_api.Client
@@ -11,7 +15,7 @@ type config struct {
 func main() {
 
 	cfg := config{
-		rickMortyClient: rick_morty_api.NewClient(),
+		rickMortyClient: rick_morty_api.NewClient(time.Hour),
 	}
 
 	startRepl(&cfg)
