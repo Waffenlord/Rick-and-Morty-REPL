@@ -8,11 +8,23 @@ import (
 )
 
 func (c *Client) ListCharacters(page *string) (CharacterResp, error) {
-	endpoint := "/character"
+	endpoint := "/character?page=1"
 	fullURL := baseURL + endpoint
 
 	if page != nil {
 		fullURL = *page
+	}
+
+	cacheData , ok := c.cache.Get(fullURL)
+	if ok {
+		characterList := CharacterResp{}
+		err := json.Unmarshal(cacheData, &characterList)
+		if err != nil {
+			return CharacterResp{}, err 
+		}
+
+		return characterList, nil
+
 	}
 
 	req, err := http.NewRequest("GET", fullURL, nil)
@@ -41,6 +53,9 @@ func (c *Client) ListCharacters(page *string) (CharacterResp, error) {
 	if err != nil {
 		return CharacterResp{}, err
 	}
+
+	c.cache.Add(fullURL, dat)
+
 
 	return characterlist, nil
 }
