@@ -58,7 +58,7 @@ func cleanInput(input string) []string {
 type cliCommand struct {
 	name string
 	description string
-	callback func(*config) error
+	callback func(*config, ...string) error
 }
 
 // Return the main menu commands
@@ -110,6 +110,11 @@ func getSecondaryCommands(option string) map[string]cliCommand {
 			name: "exit",
 			description: "Exit the program.",
 			callback: commandExit,
+		},
+		"view": {
+			name: "view",
+			description: "Type this command followed by the id of the character you want to see.",
+			callback: commandViewChar,
 		},
 	}
 	

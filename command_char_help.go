@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func commandCharHelp(cfg *config) error {
+func commandCharHelp(cfg *config, args ...string) error {
 	fmt.Println("---------------------------------")
 	fmt.Println("These are the available character commands:")
 	availableCommands := getSecondaryCommands("character")

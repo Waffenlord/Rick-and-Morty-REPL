@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func commandCharRepl(cfg *config) error {
+func commandCharRepl(cfg *config, args ...string) error {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -16,8 +16,13 @@ func commandCharRepl(cfg *config) error {
 		text := scanner.Text()
 
 		cleanedInput := cleanInput(text)
+		args := []string{}
 		if len(cleanedInput) == 0 {
 			continue
+		}
+
+		if len(cleanedInput) > 1 {
+			args = cleanedInput[1:]
 		}
 
 		commandName := cleanedInput[0]
@@ -29,7 +34,7 @@ func commandCharRepl(cfg *config) error {
 			continue
 		}
 
-		err := command.callback(cfg)
+		err := command.callback(cfg, args...)
 		if err != nil {
 			fmt.Println(err)
 		}

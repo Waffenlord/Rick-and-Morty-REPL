@@ -89,6 +89,11 @@ func TestGetSecondaryCommands(t *testing.T) {
 					description: "Exit the program.",
 					callback: commandExit,
 				},
+				"view": {
+					name: "view",
+					description: "Type this command follow by the id of the character you want to see.",
+					callback: commandViewChar,
+				},
 			},
 		},
 	}
