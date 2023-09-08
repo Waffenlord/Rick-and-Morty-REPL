@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Shows the available commands specific to characters
 func commandCharHelp(cfg *config, args ...string) error {
 	fmt.Println("---------------------------------")
 	fmt.Println("These are the available character commands:")

@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// Loop that evaluates character specific commands
 func commandCharRepl(cfg *config, args ...string) error {
 	scanner := bufio.NewScanner(os.Stdin)
 

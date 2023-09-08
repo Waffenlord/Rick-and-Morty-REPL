@@ -116,6 +116,11 @@ func getSecondaryCommands(option string) map[string]cliCommand {
 			description: "Type this command followed by the id of the character you want to see.",
 			callback: commandViewChar,
 		},
+		"save": {
+			name: "save",
+			description: "Type this command followed by the id of the character you want to save.",
+			callback: commandSaveChar,
+		},
 	}
 	
 	currentCommands, ok := commandsMap[option]

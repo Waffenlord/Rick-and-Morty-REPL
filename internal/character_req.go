@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// API request to retrieve a list with 20 characters
 func (c *Client) ListCharacters(page *string) (CharactersResp, error) {
 	endpoint := "/character?page=1"
 	fullURL := baseURL + endpoint
@@ -60,13 +61,13 @@ func (c *Client) ListCharacters(page *string) (CharactersResp, error) {
 	return characterlist, nil
 }
 
+// API request to retrieve a single character's information
 func (c *Client) GetSingleCharacter(id string) (SingleCharacter, error) {
 	endpoint := fmt.Sprintf("/character/%s", id)
 	fulURL := baseURL + endpoint
 
 	dat, ok := c.cache.Get(fulURL)
 	if ok {
-		fmt.Println("Cache hit!")
 		character := SingleCharacter{}
 		err := json.Unmarshal(dat, &character)
 		if err != nil {
@@ -76,7 +77,7 @@ func (c *Client) GetSingleCharacter(id string) (SingleCharacter, error) {
 		return character, nil
 	}
 
-	fmt.Println("Cache miss!")
+
 	req, err := http.NewRequest("GET", fulURL, nil)
 	if err != nil {
 		return SingleCharacter{}, err 

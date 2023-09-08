@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// Show the general available commands
 func commandHelp(cfg *config, args ...string) error {
 	fmt.Println("---------------------------------")
 	fmt.Println("These are the available commands:")

@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+
 type cacheEntry struct {
 	val       []byte
 	createdAt time.Time
@@ -24,7 +25,7 @@ func (c *Cache) Add(key string, value []byte) {
 	}
 }
 
-func (c Cache) Get(key string) ([]byte, bool) {
+func (c *Cache) Get(key string) ([]byte, bool) {
 	c.mux.Lock()
 	defer c.mux.Unlock()
 	entry, ok := c.cache[key]
