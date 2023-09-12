@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"os"
 	"strconv"
 	"github.com/Waffenlord/Rick-and-Morty-REPL/internal"
 )
@@ -56,6 +58,9 @@ func commandCharMapB(cfg *config, args ...string) error {
 
 // Shows information about an specific character
 func commandViewChar(cfg *config, args ...string) error {
+	if len(args) < 1 {
+		return errors.New("missing index.")
+	}
 	//Check if the first argument is a number
 	charId, err := strconv.Atoi(args[0])
 	if err != nil {
@@ -89,6 +94,9 @@ func commandViewChar(cfg *config, args ...string) error {
 
 // Saves a specific character inside the Client instance
 func commandSaveChar(cfg *config, args ...string) error {
+	if len(args) < 1 {
+		return errors.New("missing index.")
+	}
 	charId, err := strconv.Atoi(args[0])
 	if err != nil {
 		return err
@@ -120,6 +128,83 @@ func commandSaveChar(cfg *config, args ...string) error {
 	cfg.rickMortyClient.SavedChars.Characters[resp.ID] = char
 
 	fmt.Printf("ID: %v, Name: %s saved!\n", resp.ID, resp.Name)
+
+	return nil
+
+}
+
+// Delete an specific character from the list inside the Client instance
+func commandDeleteChar(cfg *config, args ...string) error {
+	if len(args) < 1 {
+		return errors.New("missing index.")
+	}
+	charId, err := strconv.Atoi(args[0])
+	if err != nil {
+		return err
+	}
+	
+	if charId < 1 || charId > cfg.characterCount {
+		return errors.New("invalid id! out of range.")
+	}
+
+	characterList := cfg.rickMortyClient.SavedChars.Characters
+	if len(characterList) < 1 {
+		return errors.New("you don't have characters saved!")
+	}
+
+	v, ok := characterList[charId]
+	if !ok {
+		return errors.New("you don't have this character saved!")
+	}
+
+	fmt.Printf("Deleting ID: %v, Name: %s from your list...\n", v.ID, v.Name)
+	delete(characterList, charId)
+
+	return nil
+}
+
+
+// Shows every character saved by the user in the Client instance
+func commandListChars(cfg *config, args ...string) error {
+	characterList := cfg.rickMortyClient.SavedChars.Characters
+	if len(characterList) < 1 {
+		return errors.New("you don't have characters saved!")
+	}
+
+	fmt.Println("Printing your characters...")
+	for _, v := range characterList {
+		fmt.Println("-------------------------------")
+		fmt.Printf(" - ID: %v\n", v.ID)
+		fmt.Printf(" - Name: %v\n", v.Name)
+		fmt.Printf(" - Status: %v\n", v.Status)
+		fmt.Printf(" - Species: %v\n", v.Species)
+		fmt.Printf(" - Gender: %v\n", v.Gender)
+		fmt.Printf(" - Origin: %v\n", v.Origin)
+		fmt.Printf(" - Location: %v\n", v.Location)
+	}
+
+	return nil
+}
+
+func commandExportChars(cfg *config, args ...string) error {
+	characterList := cfg.rickMortyClient.SavedChars.Characters
+	if len(characterList) < 1 {
+		return errors.New("you don't have characters saved!")
+	}
+
+	savedChars := cfg.rickMortyClient.SavedChars
+	dat, err := json.MarshalIndent(savedChars, "", "  ")
+	if err != nil {
+		return err
+	}
+
+	fileName := "your_saved_characters"
+	file, err := os.Create(fileName + ".json")
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	file.Write(dat)
 
 	return nil
 
