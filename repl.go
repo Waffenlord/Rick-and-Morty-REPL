@@ -136,6 +136,11 @@ func getSecondaryCommands(option string) map[string]cliCommand {
 			description: "Export your saved character",
 			callback: commandExportChars,
 		},
+		"import": {
+			name: "import",
+			description: "Type this command followed by the path of the file that contains your saved characters",
+			callback: commandImportChars,
+		},
 	}
 	
 	currentCommands, ok := commandsMap[option]

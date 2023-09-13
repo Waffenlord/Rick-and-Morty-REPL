@@ -186,19 +186,21 @@ func commandListChars(cfg *config, args ...string) error {
 	return nil
 }
 
+// Export the user's saved characters in a json file
 func commandExportChars(cfg *config, args ...string) error {
 	characterList := cfg.rickMortyClient.SavedChars.Characters
 	if len(characterList) < 1 {
 		return errors.New("you don't have characters saved!")
 	}
 
+	fmt.Println("Exporting your characters...")
 	savedChars := cfg.rickMortyClient.SavedChars
 	dat, err := json.MarshalIndent(savedChars, "", "  ")
 	if err != nil {
 		return err
 	}
 
-	fileName := "your_saved_characters"
+	fileName := "my_saved_characters"
 	file, err := os.Create(fileName + ".json")
 	if err != nil {
 		return err
@@ -206,6 +208,34 @@ func commandExportChars(cfg *config, args ...string) error {
 	defer file.Close()
 	file.Write(dat)
 
+	fmt.Println("File successfully created!")
+
 	return nil
 
+}
+
+// Import the user's saved characters from a json file
+func commandImportChars(cfg *config, args ...string) error {
+	if len(args) < 1 {
+		return errors.New("missing path.")
+	}
+
+	fmt.Println("Importing your characters...")
+	path := args[0]
+	charactersList := rick_morty_api.SavedCharacters{}
+
+	dat , err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(dat, &charactersList)
+	if err != nil {
+		return err
+	}
+
+	cfg.rickMortyClient.SavedChars = charactersList
+
+	fmt.Println("Characters uploaded successfully!")
+	return nil
 }
