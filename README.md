@@ -9,8 +9,8 @@ The program allows the user to retrieve a list of characters, specific character
 2. Execute the .exe file
 
 ### Main menu commands
-help : Displays a help message. 
-exit : Exit the program. 
+help : Displays a help message. \n
+exit : Exit the program. \n
 character : Access all characters information.
 
 ### Character menu commands
