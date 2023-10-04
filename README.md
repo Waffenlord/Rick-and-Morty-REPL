@@ -9,26 +9,39 @@ The program allows the user to retrieve a list of characters, specific character
 2. Execute the .exe file
 
 ### Main menu commands
-help : Displays a help message. \n
-exit : Exit the program. \n
+help : Displays a help message. 
+
+exit : Exit the program. 
+
 character : Access all characters information.
 
 ### Character menu commands
 del : Type this command followed by the id of the character you want to delete 
+
 export : Export your saved character 
+
 import : Type this command followed by the path of the file that contains your saved characters
+
 map : Get the a list with the next 20 characters
+
 view : Type this command followed by the id of the character you want to see.
+
 save : Type this command followed by the id of the character you want to save.
+
 list : See your saved characters
+
 help : See the list of available commands for characters
+
 back : Go back to the main menu.
+
 mapb : Get the a list with the previous 20 characters
+
 exit : Exit the program.
 
 
 ### Examples of Character menu commands
 1.
+
     Please enter a command to explore charaters > map
     Characters: 
     ID: 1, Name: Rick Sanchez, Status: Alive
@@ -53,7 +66,8 @@ exit : Exit the program.
     ID: 20, Name: Ants in my Eyes Johnson, Status: unknown
 
 
-2. 
+2.
+
     Please enter a command to explore charaters > view 1
     ==========================================
     Printing information of: Rick Sanchez
@@ -66,11 +80,13 @@ exit : Exit the program.
     - Location: Citadel of Ricks
 
 3.
+
     Please enter a command to explore charaters > save 2
     Saving character...
     ID: 2, Name: Morty Smith saved!
 
 4.
+
     Please enter a command to explore charaters > list
     Printing your characters...
     -------------------------------
