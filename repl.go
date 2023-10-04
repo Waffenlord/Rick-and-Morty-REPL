@@ -128,12 +128,12 @@ func getSecondaryCommands(option string) map[string]cliCommand {
 		},
 		"del": {
 			name: "del",
-			description: "Type this command folloed by the id of the character you want to delete",
+			description: "Type this command followed by the id of the character you want to delete",
 			callback: commandDeleteChar,
 		},
 		"export": {
 			name: "export",
-			description: "Export your saved character",
+			description: "Export your saved characters",
 			callback: commandExportChars,
 		},
 		"import": {
